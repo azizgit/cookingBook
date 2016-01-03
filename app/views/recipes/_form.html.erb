@@ -1,0 +1,193 @@
+<% @user_id= current_user.id %>
+<div class="recipes-home-body inner-page">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-lg-9">
+        <div class="recipe-set submit-recipe-set">
+          <h2>Submit Recipe</h2>
+
+          <p>Food Recipe theme include a Recipe Submit Template. It allow users to submit a recipe with featured image
+            and related details. A user
+            should be logged in to submit a recipe. </p>
+
+          <div class="submit-recipe-form">
+            <%= form_for @recipe, html: {multipart: true} do |f| %>
+
+                <% if @recipe.errors.any? %>
+                    <div id="error_explanation">
+                      <h2><%= pluralize(@recipe.errors.count, "error") %> prohibited this recipe from being saved:</h2>
+
+                      <ul>
+                        <% @recipe.errors.full_messages.each do |message| %>
+                            <li><%= message %></li>
+                        <% end %>
+                      </ul>
+                    </div>
+                <% end %>
+
+
+                <div class="form-group">
+                  <%= f.label :title %>
+                  <%= f.text_field :title, :class => 'form-control' %>
+                </div>
+
+                <div class="form-group">
+                  <%= f.label :description %>
+                  <%= f.text_area :description, :class => 'form-control', :cols => '30', :rows => '10' %>
+                </div>
+
+
+                <div class="form-group">
+                  <%= f.label :upload_image %>
+                  <%= f.file_field :image %>
+                </div>
+
+                <%= f.label :image_for_recipe_page_sliders %>
+                <div class="field">
+                  <div id="ingredients">
+                    <%= f.fields_for :photos do |photo| %>
+                        <%= render 'recipes/photo_fields', f: photo %>
+                    <% end %>
+                    <%= link_to_add_association '', f, :photos,:class=>"add-button add-ing fa fa-plus" %>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <%= f.hidden_field :user_id, :value => @user_id %>
+                </div>
+
+                <%= f.label :ingredients %>
+
+
+                <fieldset class="form-group">
+                  <%= f.fields_for :ingredients do |ingredient| %>
+                      <%= render 'recipes/ingredient_fields', f: ingredient %>
+                  <% end %>
+
+                  <%= link_to_add_association '', f, :ingredients, :class => 'add-button add-ing fa fa-plus' %>
+                </fieldset>
+
+                <%= f.label :steps %>
+
+                <fieldset class="form-group">
+                  <%= f.fields_for :directions do |direction| %>
+                      <%= render 'direction_fields', f: direction %>
+                  <% end %>
+
+                  <%= link_to_add_association '', f, :directions, :class => 'add-button add-ing fa fa-plus' %>
+                </fieldset>
+
+
+                <%= f.label :video_based_recipe, :class => 'video-based-recipe' %>
+
+                <br/>
+
+                <div class='radio-inline'>
+                  <%= f.radio_button :video, 'yes' %>
+                  <%= f.label :yes %>
+                </div>
+
+                <div class='radio-inline'>
+                  <%= f.radio_button :video, 'no' %>
+                  <%= f.label :no %>
+                </div>
+
+                <br/>
+                <br/>
+
+                <%= f.label :video_embed_code %>
+                <%= f.text_area :video_link, :cols => '30', :rows => '6', :class => 'form-control' %>
+
+
+                <div class="row">
+                  <div class="col-sm-6">
+                    <%= f.label :yield %>
+                    <%= f.text_field :yield, :class => 'form-control' %>
+                  </div>
+                  <div class="col-sm-6">
+                    <%= f.label :servings %>
+                    <%= f.text_field :servings, :class => 'form-control' %>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-4">
+                    <%= f.label :preparation_time %>
+                    <%= f.text_field :preparation_time, :class => 'form-control' %>
+                  </div>
+                  <div class="col-sm-4">
+                    <%= f.label :cook_time %>
+                    <%= f.text_field :cook_time, :class => 'form-control' %>
+                  </div>
+                  <div class="col-sm-4">
+                    <%= f.label :ready_in %>
+                    <%= f.text_field :ready_in, :class => 'form-control' %>
+                  </div>
+                </div>
+
+                <%= f.label :tags %>
+
+                <fieldset class="form-group">
+
+                  <%= f.fields_for :tags do |tag| %>
+                      <%= render 'recipes/tag_fields', f: tag %>
+                      <% end %>
+
+
+                  <%= link_to_add_association '', f, :tags, :class => 'add-button add-ing fa fa-plus' %>
+                </fieldset>
+
+                <!--<div class="row">
+                  <div class="col-sm-6">
+                    <label for="recipe-type">Recipe Type</label>
+                    <select name="recipe-type" id="recipe-type" class="advance-selectable">
+                      <option value="t0" selected="selected">None</option>
+                      <option value="t1">type 1</option>
+                      <option value="t2">type 2</option>
+                      <option value="t3">type 3</option>
+                      <option value="t4">type 4</option>
+                    </select>
+                  </div>
+                  <div class="col-sm-6">
+                    <label for="cuisine-select">Cuisine</label>
+                    <select name="cuisine" id="cuisine-select" class="advance-selectable">
+                      <option value="c0" selected="selected">None</option>
+                      <option value="c1">type 1</option>
+                      <option value="c2">type 2</option>
+                      <option value="c3">type 3</option>
+                      <option value="c4">type 4</option>
+                    </select>
+                  </div>
+                  <div class="col-sm-6">
+                    <label for="course-select">Course</label>
+                    <select name="course" id="course-select" class="advance-selectable">
+                      <option value="cr0" selected="selected">None</option>
+                      <option value="cr1">type 1</option>
+                      <option value="cr2">type 2</option>
+                      <option value="cr3">type 3</option>
+                      <option value="cr4">type 4</option>
+                    </select>
+                  </div>
+                  <div class="col-sm-6">
+                    <label for="skill">Skill Level</label>
+                    <select name="skill" id="skill" class="advance-selectable">
+                      <option value="s0" selected="selected">None</option>
+                      <option value="s1">type 1</option>
+                      <option value="s2">type 2</option>
+                      <option value="s3">type 3</option>
+                      <option value="s4">type 4</option>
+                    </select>
+                  </div>
+                </div>-->
+
+
+                <div class="text-center">
+                  <button type="submit" class="recipe-submit-btn">Submit Your Recipe</button>
+                </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

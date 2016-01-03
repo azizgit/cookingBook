@@ -1,0 +1,34 @@
+<% @recipe =Recipe.all %>
+<%= form_for @slider,html: { multipart: true } do |f| %>
+  <% if @slider.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@slider.errors.count, "error") %> prohibited this slider from being saved:</h2>
+
+      <ul>
+      <% @slider.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+
+    <div class="field">
+    <%= f.label :image %><br>
+    <%= f.file_field :image %>
+  </div>
+
+
+  <div class="field">
+    <%= f.label :select_recipe %><br>
+    <%#= f.text_field :recipe_id %>
+    <%= f.select :recipe_id,options_from_collection_for_select(@recipe, 'id', 'title'),:class=>'form-control' %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

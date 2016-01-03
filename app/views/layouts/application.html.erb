@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- meta-->
+  <%= render 'layouts/meta' %>
+  <!-- meta ends-->
+
+  <!--fonts-->
+  <%= render 'layouts/fonts' %>
+  <!--fonts ends-->
+
+  <title>Cooking Book</title>
+
+  <!-- css -->
+  <%= render 'layouts/css' %>
+  <!-- css ends-->
+
+  <!-- site favicon -->
+  <link rel="icon" href="<%= asset_path  'favicon.png' %>" />
+
+
+
+
+</head>
+
+<body>
+<!--pre-loader-->
+<%#= render 'layouts/preloader' %>
+<!--pre-loader ends-->
+
+<!--header-->
+<%= render 'layouts/header' %>
+<!--header ends-->
+
+<!--banner-->
+
+<%= render 'layouts/banner' %>
+
+
+<!--banner ends-->
+<!--slider main-->
+
+<!--slider main ends-->
+<!-- search form -->
+<%#= render 'layouts/search' %>
+<!--  search form ends -->
+
+<% if notice %>
+    <p class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><%= notice %></p>
+<% end %>
+<% if alert %>
+    <p class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><%= alert %></p>
+<% end %>
+
+<%= yield %>
+
+
+
+<!--footer-->
+
+<!--footer ends-->
+
+<!-- javascript -->
+<%= render 'layouts/js' %>
+<!-- javascript ends-->
+
+</body>
+</html>
