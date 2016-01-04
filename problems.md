@@ -142,3 +142,4 @@ iii) Now open again home/index.html.erb file and write this code for showing sea
                </div>
               </div>
   <% end %>
+added for forking
